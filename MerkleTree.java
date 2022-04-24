@@ -5,55 +5,55 @@ import java.util.List;
 public class MerkleTree {
 	
 	// A list of transaction
-	List<String> txList;
+	List<String> ChildList;
 	
 	// Merkle Root
 	String root;
 
 	
-	public MerkleTree(List<String> txList) {
-		this.txList = txList;
+	public MerkleTree(List<String> ChildList) {
+		this.ChildList = ChildList;
 		root = "";
 	}
 
 	public void merkle_tree() {
-		List<String> tempTxList = new ArrayList<String>();
+		List<String> tempChildList = new ArrayList<String>();
 
-		for (int i = 0; i < this.txList.size(); i++) {
-			tempTxList.add(this.txList.get(i));
+		for (int i = 0; i < this.ChildList.size(); i++) {
+			tempChildList.add(this.ChildList.get(i));
 		}
 
-		List<String> newTxList = getNewTxList(tempTxList);
-		while (newTxList.size() != 1) {
-			newTxList = getNewTxList(newTxList);
+		List<String> newChildList = getNewChildList(tempChildList);
+		while (newChildList.size() != 1) {
+			newChildList = getNewChildList(newChildList);
 		}
 
-		this.root = newTxList.get(0);
+		this.root = newChildList.get(0);
 	}
 
-	private List<String> getNewTxList(List<String> tempTxList) {
+	private List<String> getNewChildList(List<String> tempChildList) {
 
-		List<String> newTxList = new ArrayList<String>();
+		List<String> newChildList = new ArrayList<String>();
 		int index = 0;
-		while (index < tempTxList.size()) {
+		while (index < tempChildList.size()) {
 			// left
-			String left = tempTxList.get(index);
+			String left = tempChildList.get(index);
 			index++;
 
 			// right
 			String right = "";
-			if (index != tempTxList.size()) {
-				right = tempTxList.get(index);
+			if (index != tempChildList.size()) {
+				right = tempChildList.get(index);
 			}
 
 			// sha2 hex value
 			String sha2HexValue = getSHA2HexValue(left + right);
-			newTxList.add(sha2HexValue);
+			newChildList.add(sha2HexValue);
 			index++;
 
 		}
 
-		return newTxList;
+		return newChildList;
 	}
 
 	/**
@@ -77,11 +77,7 @@ public class MerkleTree {
 		return "";
 	}
 
-	/**
-	 * Get Root
-	 * 
-	 * 
-	 */
+	//Get root/ Top hash
 	public String getRoot() {
 		return this.root;
 	}
